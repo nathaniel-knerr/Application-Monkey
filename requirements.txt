@@ -1,0 +1,4 @@
+langchain-openai==1.0.3
+python-dotenv
+fpdf2
+psycopg2

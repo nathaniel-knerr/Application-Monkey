@@ -1,0 +1,16 @@
+{
+    "sqltools.connections": [
+    
+        {
+            "ssh": "Disabled",
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "application_monkey_db",
+            "username": "root",
+            "password": "poopApp!",
+            "database": "application_monkey_db"
+        }
+    ]
+}
