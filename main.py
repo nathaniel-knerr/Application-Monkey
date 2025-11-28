@@ -1,4 +1,3 @@
-
 from fpdf import FPDF
 import datetime
 from QuerySql import QuerySql
@@ -24,7 +23,7 @@ prompt = [
         "role": "system",
         "content": f"""
         Based on the job description, which skills, categories, and values
-        should I use to construct the perfect coverletter? The skills, 
+        should I use to construct the perfect cover letter? The skills, 
         categories, and values must be of the ones previously stated and must 
         be written the exact same. Make sure each skill is surrounded 
         by '$$'. Ex: $$skill1$$, $$skill2$$; Make sure each category 
@@ -96,13 +95,13 @@ prompt = [
     {
         "role": "system",
         "content": f"""
-        Write an impressive coverletter for the role listed in the job description as the person with 
+        Write an impressive cover letter for the role listed in the job description as the person with 
         the following personal information: {personal_info_str}.
         The current date is {datetime.datetime.now().date()}.
-        In the coverletter, incorperate the experiences here: {most_relevant_experiences_str}. 
+        In the cover letter, incorperate the experiences here: {most_relevant_experiences_str}. 
         While mentioning having these skills: {job_skill_names_str}; 
         and these values {job_value_names_str}. 
-        Write the coverletter with a friend professional tone. Make the letter sound like a human 
+        Write the cover letter with a friend professional tone. Make the letter sound like a human 
         wrote it. Do not use em dashes or unnecessarily complicated vocabulary. 
         If a name, location, or any other data is unknown, just omit it or use a generic phrasing.
         Do not provide placeholders for unknown values. You are returning a final draft.
@@ -127,7 +126,7 @@ pdf.multi_cell(0, 10, cover_letter)
 
 now_isoformat = datetime.datetime.now().isoformat()
 output_file_name = now_isoformat.replace(":", "-").replace(".", "-") + ".pdf"
-pdf.output("coverletters/" + output_file_name)
+pdf.output("cover-letters/" + output_file_name)
 
 QuerySql.closeConnection()
 

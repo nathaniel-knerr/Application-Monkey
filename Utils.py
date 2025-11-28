@@ -1,6 +1,3 @@
-
-
-
 class Utils:
     def most_frequent(arr):
         frequencies = []
