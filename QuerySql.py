@@ -3,24 +3,26 @@ import os
 import psycopg2
 from Utils import Utils
 
-load_dotenv()
 
-conn = psycopg2.connect(
-    dbname="application_monkey_db",
-    user="root",
-    password=os.getenv("DB_PASSWORD"),
-    host="localhost",
-    port=5432
-)
-
-cur = conn.cursor()
 
 class QuerySql:
-    def getColumn(column, table):
-        
-        cur.execute(f"SELECT {column} FROM {table};")
+    def __init__(self):
+        load_dotenv()
+        self.conn = psycopg2.connect(
+            host="dpg-d4mju3m3jp1c73a02jm0-a.oregon-postgres.render.com",
+            port=5432,
+            database="application_monkey_db",
+            user="root",
+            password=os.getenv("DB_PASSWORD")
+        )
+        self.cur = self.conn.cursor()
 
-        data_unfiltered = cur.fetchall()
+
+    def getColumn(self, column, table):
+        
+        self.cur.execute(f"SELECT {column} FROM {table};")
+
+        data_unfiltered = self.cur.fetchall()
         data = []
         
         for d in data_unfiltered:
@@ -29,27 +31,13 @@ class QuerySql:
 
        
         return data
-        
-    
-    def getColumn(column, table):
-     
-        cur.execute(f"SELECT {column} FROM {table};")
-
-        data_unfiltered = cur.fetchall()
-        data = []
-        
-        for d in data_unfiltered:
-            if (d[0]):
-                data.append(d[0])
-
-        return data
     
     
-    def getExperiencesBySkill(skill_name):
+    def getExperiencesBySkill(self, skill_name):
       
-        cur.execute(f"SELECT experience_name FROM ExperienceSkills WHERE skill_name = '{skill_name}';")
+        self.cur.execute(f"SELECT experience_name FROM ExperienceSkills WHERE skill_name = '{skill_name}';")
 
-        data_unfiltered = cur.fetchall()
+        data_unfiltered = self.cur.fetchall()
         data = []
         
         for d in data_unfiltered:
@@ -59,11 +47,11 @@ class QuerySql:
         return data
     
 
-    def getExperiencesByCategory(category_name):
+    def getExperiencesByCategory(self, category_name):
    
-        cur.execute(f"SELECT experience_name FROM ExperienceCategories WHERE category_name = '{category_name}';")
+        self.cur.execute(f"SELECT experience_name FROM ExperienceCategories WHERE category_name = '{category_name}';")
 
-        data_unfiltered = cur.fetchall()
+        data_unfiltered = self.cur.fetchall()
         data = []
         
         for d in data_unfiltered:
@@ -74,10 +62,10 @@ class QuerySql:
         return data
     
 
-    def getPersonalInformation():
+    def getPersonalInformation(self):
     
-        cur.execute("SELECT * FROM PersonalInformation;")
-        user_list = cur.fetchall()[0]
+        self.cur.execute("SELECT * FROM PersonalInformation;")
+        user_list = self.cur.fetchall()[0]
         user = {
             "first_name": user_list[1],
             "middle_name": user_list[2],
@@ -95,26 +83,26 @@ class QuerySql:
         return user
     
 
-    def getMostRelevantExperiences(job_skills, job_categories):
+    def getMostRelevantExperiences(self, job_skills, job_categories):
         relevant_experieces = []
         for job_skill in job_skills:
-            relevant_experieces += QuerySql.getExperiencesBySkill(job_skill)
+            relevant_experieces += self.getExperiencesBySkill(job_skill)
         for job_category in job_categories:
-            relevant_experieces += QuerySql.getExperiencesBySkill(job_category)
+            relevant_experieces += self.getExperiencesBySkill(job_category)
         sorted_relevant_experieces = Utils.most_frequent(relevant_experieces)
         return sorted_relevant_experieces[:2]
     
 
-    def getExperienceData(experience, column):
+    def getExperienceData(self, experience, column):
         
-        cur.execute(f"SELECT {column} FROM Experiences WHERE experience_name = '{experience}'")
+        self.cur.execute(f"SELECT {column} FROM Experiences WHERE experience_name = '{experience}'")
      
-        return cur.fetchall()[0][0]
+        return self.cur.fetchall()[0][0]
     
 
-    def closeConnection():
-        cur.close()
-        conn.close()
+    def closeConnection(self):
+        self.cur.close()
+        self.conn.close()
 
 
 # print(QuerySql.getExperienceData("Deepiri AI: AI Systems Engineer Internship", "start_year"))
