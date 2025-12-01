@@ -96,13 +96,41 @@ def main(job_description):
             Write an impressive cover letter for the role listed in the job description as the person with 
             the following personal information: {personal_info_str}.
             The current date is {datetime.datetime.now().date()}.
-            In the cover letter, incorperate the experiences here: {most_relevant_experiences_str}. 
+            In the cover letter, incorporate the experiences here: {most_relevant_experiences_str}. 
             While mentioning having these skills: {job_skill_names_str}; 
             and these values {job_value_names_str}. 
-            Write the cover letter with a friend professional tone. Make the letter sound like a human 
+            Write the cover letter with a friendly professional tone. Make the letter sound like a human 
             wrote it. Do not use em dashes or unnecessarily complicated vocabulary. 
-            If a name, location, or any other data is unknown, just omit it or use a generic phrasing.
-            Do not provide placeholders for unknown values. You are returning a final draft.
+            If a name, location, or any other data is unknown, omit it completely; 
+            do not invent or leave placeholders. You are returning a final draft. The cover 
+            letter should follow this exact format:
+
+            [current date]
+            [location]
+
+            Dear Sir/Madam,
+
+            RE: [job role, if known]
+
+            [paragraph 1: hook]
+
+            [paragraph 2: expand on hook]
+
+            [paragraph 3: most relevant experience]
+
+            [paragraph 4: other most relevant experience]
+
+            I believe I am the best candidate for this position and would very much appreciate the 
+            opportunity to attend an interview.
+
+            Yours faithfully,
+
+            [name]
+            [email, if known]
+            [phone number, if known]
+            [website, if known]
+            [linkedin, if known]
+            [github, if known]
             """
         },
         {
